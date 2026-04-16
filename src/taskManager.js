@@ -54,3 +54,8 @@ export function addTask(tasks, title) {
 export function toggleTask(task) {
   return { ...task, completed: !task.completed };
 }
+
+export function removeTask(tasks, taskId) {
+  // Retorna um novo array sem a tarefa cujo id corresponde a taskId
+  return tasks.filter(task => task.id !== taskId);
+}

@@ -4,7 +4,8 @@ import {
   createTask,
   addTask,
   resetId,
-  toggleTask 
+  toggleTask,
+  removeTask 
 } from '../src/taskManager.js';
 
 // ============================================================
