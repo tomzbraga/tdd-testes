@@ -25,18 +25,6 @@ export function validateTitle(title) {
 }
 
 // ------------------------------------------------------------
-// Criação
-// ------------------------------------------------------------
-
-export function createTask(title) {
-  return {
-    id: _nextId++,
-    title: title.trim(),
-    completed: false,
-  };
-}
-
-// ------------------------------------------------------------
 // Adição com validação
 // ------------------------------------------------------------
 
@@ -84,3 +72,40 @@ export function countCompleted(tasks) {
 export function countPending(tasks) {
   return tasks.filter(task => !task.completed).length;
 }
+
+export function validatePriority(priority) {
+  return ['low', 'medium', 'high'].includes(priority);
+}
+
+export function createTask(title, priority = 'medium') {
+  if (!validateTitle(title)) {
+    throw new Error('Título inválido: deve ser uma string com pelo menos 3 caracteres.');
+  }
+
+  if (!validatePriority(priority)) {
+    priority = 'medium'; // fallback para valores inválidos
+  }
+
+  return {
+    id: _nextId++,
+    title: title.trim(),
+    completed: false,
+    priority
+  };
+
+  const task = {
+    id: currentId++,
+    title: title.trim(),
+    completed: false,
+    priority
+  };
+  return task;
+}
+
+export function filterByPriority(tasks, priority) {
+  if (!validatePriority(priority)) {
+    return [...tasks]; // retorna todas se prioridade inválida
+  }
+  return tasks.filter(task => task.priority === priority);
+}
+

@@ -9,7 +9,9 @@ import {
   filterTasks,
   countTasks,
   countCompleted,
-  countPending
+  countPending,
+  validatePriority,
+  filterByPriority
 } from '../src/taskManager.js';
 
 // ============================================================
@@ -323,3 +325,44 @@ describe('Contagens', () => {
     expect(countCompleted(onlyPending)).toBe(0);
   });
 });
+
+// ============================================================
+// 8. Prioridade
+// ============================================================
+describe('Prioridade nas tarefas', () => {
+  beforeEach(() => {
+    resetId();
+  });
+
+  it("createTask('Tarefa', 'high') deve retornar objeto com priority: 'high'", () => {
+    const task = createTask('Tarefa', 'high');
+    expect(task.priority).toBe('high');
+  });
+
+  it("createTask('Tarefa') deve retornar priority: 'medium' (padrão)", () => {
+    const task = createTask('Tarefa');
+    expect(task.priority).toBe('medium');
+  });
+
+  it("validatePriority('high') → true", () => {
+    expect(validatePriority('high')).toBe(true);
+  });
+
+  it("validatePriority('urgente') → false", () => {
+    expect(validatePriority('urgente')).toBe(false);
+  });
+
+  it("filterByPriority(tasks, 'high') deve retornar apenas tarefas de alta prioridade", () => {
+    const tasks = [
+      { id: 1, title: 'Estudar', completed: false, priority: 'low' },
+      { id: 2, title: 'Treinar', completed: true, priority: 'high' },
+      { id: 3, title: 'Ler', completed: false, priority: 'medium' },
+      { id: 4, title: 'Projeto', completed: false, priority: 'high' }
+    ];
+
+    const result = filterByPriority(tasks, 'high');
+    expect(result).toHaveLength(2);
+    expect(result.every(t => t.priority === 'high')).toBe(true);
+  });
+});
+
