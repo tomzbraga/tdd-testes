@@ -366,3 +366,27 @@ describe('Prioridade nas tarefas', () => {
   });
 });
 
+// ============================================================
+// 9. Duplicatas
+// ============================================================
+describe('Duplicatas', () => {
+  it("isDuplicate([{ title: 'Estudar' }], 'Estudar') → true", () => {
+    const tasks = [{ id: 1, title: 'Estudar', completed: false }];
+    expect(isDuplicate(tasks, 'Estudar')).toBe(true);
+  });
+
+  it("isDuplicate([{ title: 'Estudar' }], 'estudar') → true (case-insensitive)", () => {
+    const tasks = [{ id: 1, title: 'Estudar', completed: false }];
+    expect(isDuplicate(tasks, 'estudar')).toBe(true);
+  });
+
+  it("isDuplicate([{ title: 'Estudar' }], 'Trabalhar') → false", () => {
+    const tasks = [{ id: 1, title: 'Estudar', completed: false }];
+    expect(isDuplicate(tasks, 'Trabalhar')).toBe(false);
+  });
+
+  it("addTask(tasks, 'Estudar') quando já existe 'Estudar' → deve lançar erro", () => {
+    const tasks = [{ id: 1, title: 'Estudar', completed: false }];
+    expect(() => addTask(tasks, 'Estudar')).toThrow('Título duplicado');
+  });
+});
