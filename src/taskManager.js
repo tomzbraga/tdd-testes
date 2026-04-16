@@ -127,5 +127,15 @@ export function addTask(tasks, title) {
   return [...tasks, newTask];
 }
 
+export function sortTasks(tasks) {
+  // Cria uma cópia para garantir imutabilidade
+  const copy = [...tasks];
+  // Ordena: pendentes (false) primeiro, concluídas (true) depois
+  return copy.sort((a, b) => {
+    if (a.completed === b.completed) return 0;
+    return a.completed ? 1 : -1;
+  });
+}
+
 
 

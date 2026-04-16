@@ -12,7 +12,8 @@ import {
   countPending,
   validatePriority,
   filterByPriority,
-  isDuplicate
+  isDuplicate,
+  sortTasks
 } from '../src/taskManager.js';
 
 // ============================================================
