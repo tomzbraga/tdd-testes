@@ -5,7 +5,8 @@ import {
   addTask,
   resetId,
   toggleTask,
-  removeTask 
+  removeTask,
+  filterTasks
 } from '../src/taskManager.js';
 
 // ============================================================

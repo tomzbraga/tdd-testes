@@ -59,3 +59,16 @@ export function removeTask(tasks, taskId) {
   // Retorna um novo array sem a tarefa cujo id corresponde a taskId
   return tasks.filter(task => task.id !== taskId);
 }
+
+export function filterTasks(tasks, status) {
+  switch (status) {
+    case 'completed':
+      return tasks.filter(task => task.completed);
+    case 'pending':
+      return tasks.filter(task => !task.completed);
+    case 'all':
+      return [...tasks]; // cópia para garantir imutabilidade
+    default:
+      return [...tasks]; // fallback para filtros desconhecidos
+  }
+}
