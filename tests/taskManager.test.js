@@ -235,3 +235,46 @@ describe('removeTask', () => {
     expect(result).toEqual([]);
   });
 });
+
+// ============================================================
+// 6. filterTasks
+// ============================================================
+describe('filterTasks', () => {
+  const tasks = [
+    { id: 1, title: 'Estudar', completed: false },
+    { id: 2, title: 'Treinar', completed: true },
+    { id: 3, title: 'Ler', completed: false }
+  ];
+
+  it("Filtro 'all' retorna todas", () => {
+    const result = filterTasks(tasks, 'all');
+    expect(result).toHaveLength(3);
+  });
+
+  it("Filtro 'pending' retorna apenas pendentes", () => {
+    const result = filterTasks(tasks, 'pending');
+    expect(result).toHaveLength(2);
+    expect(result.every(t => t.completed === false)).toBe(true);
+  });
+
+  it("Filtro 'completed' retorna apenas concluídas", () => {
+    const result = filterTasks(tasks, 'completed');
+    expect(result).toHaveLength(1);
+    expect(result[0].completed).toBe(true);
+  });
+
+  it("Filtro desconhecido retorna todas (default)", () => {
+    const result = filterTasks(tasks, 'qualquer');
+    expect(result).toHaveLength(3);
+  });
+
+  it("Lista vazia retorna array vazio", () => {
+    const result = filterTasks([], 'all');
+    expect(result).toEqual([]);
+  });
+
+  it("Retorna um novo array (imutabilidade)", () => {
+    const result = filterTasks(tasks, 'all');
+    expect(result).not.toBe(tasks);
+  });
+});
