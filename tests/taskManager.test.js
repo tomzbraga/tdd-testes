@@ -391,3 +391,60 @@ describe('Duplicatas', () => {
     expect(() => addTask(tasks, 'Estudar')).toThrow('Título duplicado');
   });
 });
+
+// ============================================================
+// 10. Ordenação
+// ============================================================
+describe('sortTasks', () => {
+  it('Lista mista deve retornar pendentes antes de concluídas', () => {
+    const tasks = [
+      { id: 1, title: 'Estudar', completed: true },
+      { id: 2, title: 'Treinar', completed: false },
+      { id: 3, title: 'Ler', completed: true },
+      { id: 4, title: 'Projeto', completed: false }
+    ];
+
+    const result = sortTasks(tasks);
+
+    // Pendentes primeiro
+    expect(result[0].completed).toBe(false);
+    expect(result[1].completed).toBe(false);
+    expect(result[2].completed).toBe(true);
+    expect(result[3].completed).toBe(true);
+  });
+
+  it('Lista só com pendentes deve manter a ordem', () => {
+    const tasks = [
+      { id: 1, title: 'A', completed: false },
+      { id: 2, title: 'B', completed: false }
+    ];
+
+    const result = sortTasks(tasks);
+    expect(result).toEqual(tasks);
+  });
+
+  it('Lista só com concluídas deve manter a ordem', () => {
+    const tasks = [
+      { id: 1, title: 'A', completed: true },
+      { id: 2, title: 'B', completed: true }
+    ];
+
+    const result = sortTasks(tasks);
+    expect(result).toEqual(tasks);
+  });
+
+  it('Lista vazia deve retornar array vazio', () => {
+    const result = sortTasks([]);
+    expect(result).toEqual([]);
+  });
+
+  it('Deve retornar um NOVO array (imutabilidade)', () => {
+    const tasks = [
+      { id: 1, title: 'A', completed: false },
+      { id: 2, title: 'B', completed: true }
+    ];
+
+    const result = sortTasks(tasks);
+    expect(result).not.toBe(tasks);
+  });
+});
