@@ -279,3 +279,44 @@ describe('filterTasks', () => {
     expect(result).not.toBe(tasks);
   });
 });
+
+// ============================================================
+// 7. Contagens
+// ============================================================
+describe('Contagens', () => {
+  const tasks = [
+    { id: 1, title: 'Estudar', completed: false },
+    { id: 2, title: 'Treinar', completed: true },
+    { id: 3, title: 'Ler', completed: false }
+  ];
+
+  it('Lista vazia retorna 0 para todas', () => {
+    expect(countTasks([])).toBe(0);
+    expect(countCompleted([])).toBe(0);
+    expect(countPending([])).toBe(0);
+  });
+
+  it('countTasks retorna o total', () => {
+    expect(countTasks(tasks)).toBe(3);
+  });
+
+  it('countCompleted conta apenas completed === true', () => {
+    expect(countCompleted(tasks)).toBe(1);
+  });
+
+  it('countPending conta apenas completed === false', () => {
+    expect(countPending(tasks)).toBe(2);
+  });
+
+  it('Retorna 0 quando não há nenhuma do tipo', () => {
+    const onlyCompleted = [
+      { id: 1, title: 'Feito', completed: true }
+    ];
+    const onlyPending = [
+      { id: 2, title: 'A fazer', completed: false }
+    ];
+
+    expect(countPending(onlyCompleted)).toBe(0);
+    expect(countCompleted(onlyPending)).toBe(0);
+  });
+});
