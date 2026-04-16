@@ -28,17 +28,6 @@ export function validateTitle(title) {
 // Adição com validação
 // ------------------------------------------------------------
 
-export function addTask(tasks, title) {
-  if (!validateTitle(title)) {
-    throw new Error(
-      'Título inválido: deve ser uma string com pelo menos 3 caracteres.'
-    );
-  }
-
-  const newTask = createTask(title);
-  return [...tasks, newTask];
-}
-
 export function toggleTask(task) {
   return { ...task, completed: !task.completed };
 }
@@ -108,4 +97,35 @@ export function filterByPriority(tasks, priority) {
   }
   return tasks.filter(task => task.priority === priority);
 }
+
+export function isDuplicate(tasks, title) {
+  if (typeof title !== 'string') return false;
+  const normalized = title.trim().toLowerCase();
+  return tasks.some(task => task.title.trim().toLowerCase() === normalized);
+}
+
+export function addTask(tasks, title) {
+  if (!validateTitle(title)) {
+    throw new Error(
+      'Título inválido: deve ser uma string com pelo menos 3 caracteres.'
+    );
+  }
+
+  if (isDuplicate(tasks, title)) {
+    throw new Error('Título duplicado');
+
+  const newTask = createTask(title);
+  return [...tasks, newTask];
+}
+
+
+  if (isDuplicate(tasks, title)) {
+    throw new Error('Título duplicado');
+  }
+
+  const newTask = createTask(title);
+  return [...tasks, newTask];
+}
+
+
 
