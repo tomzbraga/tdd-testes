@@ -4,6 +4,7 @@ import {
   createTask,
   addTask,
   resetId,
+  toggleTask 
 } from '../src/taskManager.js';
 
 // ============================================================
@@ -140,5 +141,40 @@ describe('addTask', () => {
 
   it('deve lançar erro para título numérico', () => {
     expect(() => addTask([], 42)).toThrow('Título inválido');
+  });
+});
+
+// ============================================================
+// 4. toggleTask
+// ============================================================
+describe('toggleTask', () => {
+  it('Tarefa pendente (completed: false) deve virar concluída (completed: true)', () => {
+    const original = { id: 1, title: 'tarefa', completed: false };
+    const result = toggleTask(original);
+
+    expect(result.completed).toBe(true);
+  });
+
+  it('Tarefa concluída deve voltar a pendente', () => {
+    const original = { id: 2, title: 'tarefa2', completed: true };
+    const result = toggleTask(original);
+
+    expect(result.completed).toBe(false);
+  });
+
+  it('Deve manter id e title inalterados', () => {
+    const original = { id: 3, title: 'tarefa3', completed: false };
+    const result = toggleTask(original);
+
+    expect(result.id).toBe(original.id);
+    expect(result.title).toBe(original.title);
+  });
+
+  it('Deve retornar um novo objeto (imutabilidade) — o original não muda', () => {
+    const original = { id: 4, title: 'tarefa4', completed: false };
+    const result = toggleTask(original);
+
+    expect(result).not.toBe(original); // novo objeto
+    expect(original.completed).toBe(false); // original intacto
   });
 });
