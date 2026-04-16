@@ -72,3 +72,15 @@ export function filterTasks(tasks, status) {
       return [...tasks]; // fallback para filtros desconhecidos
   }
 }
+
+export function countTasks(tasks) {
+  return tasks.length;
+}
+
+export function countCompleted(tasks) {
+  return tasks.filter(task => task.completed).length;
+}
+
+export function countPending(tasks) {
+  return tasks.filter(task => !task.completed).length;
+}

@@ -6,7 +6,10 @@ import {
   resetId,
   toggleTask,
   removeTask,
-  filterTasks
+  filterTasks,
+  countTasks,
+  countCompleted,
+  countPending
 } from '../src/taskManager.js';
 
 // ============================================================
