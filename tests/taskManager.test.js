@@ -178,3 +178,59 @@ describe('toggleTask', () => {
     expect(original.completed).toBe(false); // original intacto
   });
 });
+
+// ============================================================
+// 5. removeTask
+// ============================================================
+describe('removeTask', () => {
+  it('Remove a tarefa correta pelo ID', () => {
+    const tasks = [
+      { id: 1, title: 'Estudar', completed: false },
+      { id: 2, title: 'Treinar', completed: true }
+    ];
+    const result = removeTask(tasks, 1);
+
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe(2);
+  });
+
+  it('Mantém as outras tarefas intactas', () => {
+    const tasks = [
+      { id: 1, title: 'Estudar', completed: false },
+      { id: 2, title: 'Treinar', completed: true },
+      { id: 3, title: 'Ler', completed: false }
+    ];
+    const result = removeTask(tasks, 2);
+
+    expect(result).toHaveLength(2);
+    expect(result.find(t => t.id === 1)).toBeDefined();
+    expect(result.find(t => t.id === 3)).toBeDefined();
+  });
+
+  it('Retorna um novo array (imutabilidade)', () => {
+    const tasks = [
+      { id: 1, title: 'Estudar', completed: false }
+    ];
+    const result = removeTask(tasks, 1);
+
+    expect(result).not.toBe(tasks);
+    expect(tasks).toHaveLength(1); // original intacto
+  });
+
+  it('ID inexistente retorna a lista completa', () => {
+    const tasks = [
+      { id: 1, title: 'Estudar', completed: false }
+    ];
+    const result = removeTask(tasks, 99);
+
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe(1);
+  });
+
+  it('Lista vazia retorna array vazio', () => {
+    const tasks = [];
+    const result = removeTask(tasks, 1);
+
+    expect(result).toEqual([]);
+  });
+});
