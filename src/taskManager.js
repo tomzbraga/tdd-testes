@@ -50,3 +50,7 @@ export function addTask(tasks, title) {
   const newTask = createTask(title);
   return [...tasks, newTask];
 }
+
+export function toggleTask(task) {
+  return { ...task, completed: !task.completed };
+}
