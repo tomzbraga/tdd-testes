@@ -449,3 +449,40 @@ describe('sortTasks', () => {
     expect(result).not.toBe(tasks);
   });
 });
+
+// ============================================================
+// 11. Busca por texto
+// ============================================================
+describe('searchTasks', () => {
+  const tasks = [
+    { id: 1, title: 'Estudar', completed: false },
+    { id: 2, title: 'Testar', completed: true },
+    { id: 3, title: 'Ler', completed: false }
+  ];
+
+  it("searchTasks(tasks, 'est') deve encontrar 'Estudar' e 'Testar'", () => {
+    const result = searchTasks(tasks, 'est');
+    expect(result).toHaveLength(2);
+    expect(result.map(t => t.title)).toEqual(expect.arrayContaining(['Estudar', 'Testar']));
+  });
+
+  it("searchTasks(tasks, 'EST') deve funcionar (case-insensitive)", () => {
+    const result = searchTasks(tasks, 'EST');
+    expect(result).toHaveLength(2);
+  });
+
+  it("searchTasks(tasks, 'xyz') deve retornar array vazio", () => {
+    const result = searchTasks(tasks, 'xyz');
+    expect(result).toEqual([]);
+  });
+
+  it("searchTasks([], 'algo') deve retornar array vazio", () => {
+    const result = searchTasks([], 'algo');
+    expect(result).toEqual([]);
+  });
+
+  it("searchTasks(tasks, '') deve retornar todas as tarefas", () => {
+    const result = searchTasks(tasks, '');
+    expect(result).toHaveLength(3);
+  });
+});
