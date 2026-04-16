@@ -13,7 +13,8 @@ import {
   validatePriority,
   filterByPriority,
   isDuplicate,
-  sortTasks
+  sortTasks,
+  searchTasks
 } from '../src/taskManager.js';
 
 // ============================================================

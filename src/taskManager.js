@@ -137,5 +137,21 @@ export function sortTasks(tasks) {
   });
 }
 
+export function searchTasks(tasks, query) {
+  if (!query || typeof query !== 'string') {
+    return [...tasks]; // retorna todas se query vazia ou inválida
+  }
+
+  const normalized = query.trim().toLowerCase();
+  if (normalized === '') {
+    return [...tasks]; // query vazia → todas
+  }
+
+  return tasks.filter(task =>
+    task.title.trim().toLowerCase().includes(normalized)
+  );
+}
+
+
 
 
